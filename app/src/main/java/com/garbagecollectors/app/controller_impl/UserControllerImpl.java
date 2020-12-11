@@ -8,9 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import com.garbagecollectors.app.dto.ConfirmeRequest;
 import com.garbagecollectors.app.dto.LoginRequest;
 import com.garbagecollectors.app.dto.LoginResponse;
 import com.garbagecollectors.app.dto.RegisterRequest;
+import com.garbagecollectors.app.dto.ScoreBoardResponse;
 import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Profile;
 import com.garbagecollectors.app.model.User;
@@ -30,6 +32,7 @@ public class UserControllerImpl {
 
     @Autowired
     private JwtUtil jwtUtil;
+    
 
     @Value("${secret.key}")
     private String secret;
@@ -96,6 +99,17 @@ public class UserControllerImpl {
         }
 
         return  response;
+    }
+    
+    public StringResponse confirmePresence(ConfirmeRequest request) {
+    	
+    	return null;
+    	
+    }
+    
+    public ScoreBoardResponse getScoreBoard() {
+    	
+    	return null;
     }
 
 }

@@ -2,9 +2,11 @@ package com.garbagecollectors.app.controller;
 
 
 import com.garbagecollectors.app.controller_impl.UserControllerImpl;
+import com.garbagecollectors.app.dto.ConfirmeRequest;
 import com.garbagecollectors.app.dto.LoginRequest;
 import com.garbagecollectors.app.dto.LoginResponse;
 import com.garbagecollectors.app.dto.RegisterRequest;
+import com.garbagecollectors.app.dto.ScoreBoardResponse;
 import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.User;
 import com.garbagecollectors.app.service.UserService;
@@ -46,7 +48,7 @@ public class UserContoller {
 
     }
 
-    @PostMapping(value = "user/test")
+    @PostMapping(value = "/user/test")
     @ResponseBody
     public StringResponse test(){
 
@@ -63,4 +65,25 @@ public class UserContoller {
         }
 
     }
+    
+    @PostMapping(value = "user/confirmePresence")
+    @ResponseBody
+    public StringResponse confirmePresence(@RequestBody ConfirmeRequest request) {
+    	
+    	StringResponse response = userControllerImpl.confirmePresence(request);
+    	
+    	return response;
+    	
+    }
+    
+    @GetMapping("/scoreBoard")
+    public ScoreBoardResponse getScoreBoard() {
+    	
+    	ScoreBoardResponse response = userControllerImpl.getScoreBoard();
+    	
+    	return response;
+		
+	}
+    
+    
 }
