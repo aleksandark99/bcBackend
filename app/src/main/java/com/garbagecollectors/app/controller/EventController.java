@@ -32,9 +32,9 @@ public class EventController {
 
     @PostMapping(value = "user/event")
     @ResponseBody
-    public StringResponse createEvent(@RequestBody EventRequest request, @RequestParam("image") MultipartFile image) throws IOException {
+    public StringResponse createEvent(@RequestParam("image") MultipartFile image) throws IOException {
 
-        return eventControllerImpl.createEvent(request, image);
+        return eventControllerImpl.createEvent(image);
     }
 
 

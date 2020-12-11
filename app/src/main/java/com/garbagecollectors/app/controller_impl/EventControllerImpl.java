@@ -54,19 +54,19 @@ public class EventControllerImpl {
         return eventService.findEventsByUser(userId);
     }
 
-    public StringResponse createEvent(EventRequest event, MultipartFile image) throws IOException {
+    public StringResponse createEvent(MultipartFile file) throws IOException {
 
         String jwtToken = hsr.getHeader("Authorization").substring(7);
         User user = userService.findByJwt(jwtToken);
 
         StringResponse response = new StringResponse();
 
-        if(!image.isEmpty()) {
+        if(!file.isEmpty()) {
 
             MultiValueMap<String, Object> bodyMap = new LinkedMultiValueMap<String, Object>();
 
 
-            bodyMap.add("image", Base64.getEncoder().encode(image.getBytes()));
+            bodyMap.add("image", Base64.getEncoder().encode(file.getBytes()));
 
             HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -81,14 +81,14 @@ public class EventControllerImpl {
 
             Picture startPicture = new Picture();
             startPicture.setPicture_url(pic_url);
-            startPicture.setPicture_name(image.getOriginalFilename());
-            startPicture.setPicture_size(image.getSize());
-            startPicture.setMime_type(image.getContentType());
+            startPicture.setPicture_name(file.getOriginalFilename());
+            startPicture.setPicture_size(file.getSize());
+            startPicture.setMime_type(file.getContentType());
             pictureService.save(startPicture);
 
             Event newEvent = new Event();
-            newEvent.setEvent_name(event.getEventName());
-            newEvent.setEvent_desc(event.getEventDescription());
+//            newEvent.setEvent_name(event.getEventName());
+//            newEvent.setEvent_desc(event.getEventDescription());
             newEvent.setIsOrganizedBy(user);
             newEvent.setStart_picture(startPicture);
 
