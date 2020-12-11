@@ -35,23 +35,26 @@ public class Event {
 	@Column(unique = true, nullable = false)
 	private int event_id;
 	
-	@NonNull
-	@Column(unique = false, nullable = false)
+
+	@Column(unique = false, nullable = true)
 	private String event_name;
 	
 	@Lob
-	@Column(unique = false, nullable = false)
+	@Column(unique = false, nullable = true)
 	private String event_desc;
 	
-	@NonNull
-	@Column(unique = false, nullable = false)
+
+	@Column(unique = false, nullable = true)
 	private String event_location;
 	
-	@Column(nullable = false, unique = false)
+	@Column(nullable = true, unique = false)
 	private String start_date;
 	
+	@Column(nullable = true, unique = false)
+	private String due_date;
+
 	@Column(nullable = false, unique = false)
-	private String  due_date;
+	private boolean isVerified;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="start_pic_id", referencedColumnName = "picture_id")

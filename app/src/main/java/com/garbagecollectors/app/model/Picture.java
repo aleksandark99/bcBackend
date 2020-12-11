@@ -28,7 +28,7 @@ public class Picture {
 	@Column(unique = false, nullable = false)
 	private String mime_type;
 	
-	@Column(unique = true, nullable = false)
+	@Column(unique = false, nullable = false)
 	private String picture_url;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy="start_picture")
