@@ -6,9 +6,10 @@ import java.util.Set;
 
 import javax.persistence.*;
 
+import com.garbagecollectors.app.model.enums.ERole;
 import org.springframework.lang.NonNull;
 
-import com.myproject.app.entities.enums.ERole;
+import com.garbagecollectors.app.model.enums.ERole;
 
 import lombok.*;
 
