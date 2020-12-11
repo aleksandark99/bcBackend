@@ -52,6 +52,9 @@ public class Event {
 	
 	@Column(nullable = false, unique = false)
 	private String  due_date;
+
+	@Column(nullable = false, unique = false)
+	private boolean isVerified;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="start_pic_id", referencedColumnName = "picture_id")
