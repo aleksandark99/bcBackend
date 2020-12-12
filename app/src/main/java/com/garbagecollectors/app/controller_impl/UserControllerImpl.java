@@ -2,12 +2,11 @@ package com.garbagecollectors.app.controller_impl;
 
 
 import java.io.IOException;
-import java.util.Base64;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.garbagecollectors.app.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -61,6 +60,9 @@ public class UserControllerImpl {
 
     @Value("${secret.key}")
     private String secret;
+
+    @Autowired
+    private EventRepository eventRepository;
     
     private static String UPLOAD_ROOT = "https://api.imgbb.com/1/upload?key=b06a3582d53c4a0be976670478081f5c";
 
@@ -130,9 +132,28 @@ public class UserControllerImpl {
     }
     
     public StringResponse confirmePresence(ConfirmeRequest request) {
-    	
-    	return null;
-    	
+
+        StringResponse response = new StringResponse();
+
+        String jwtToken = hsr.getHeader("Authorization").substring(7);
+        User user = userService.findByJwt(jwtToken);
+
+        if(user != null) {
+            Event eventToBeConfirmed = eventService.findEventById(request.getEventId());
+
+            eventToBeConfirmed.getUsers().add(user);
+            user.getUser_events().add(eventToBeConfirmed);
+            eventRepository.save(eventToBeConfirmed);
+
+            response.setCode(200);
+            response.setError(false);
+            response.setMessage(messageSource.getMessage("event.has.confirmed", null, new Locale("en")));
+        }else{
+            response.setCode(200);
+            response.setError(true);
+            response.setMessage(messageSource.getMessage("event.has.not.confirmed", null, new Locale("en")));
+        }
+        return response;
     }
     
     public ScoreBoardResponse getScoreBoard() {

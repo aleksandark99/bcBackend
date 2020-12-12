@@ -2,18 +2,7 @@ package com.garbagecollectors.app.model;
 
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -70,7 +59,7 @@ public class Event {
 	@JoinColumn(name="group_pic_id", referencedColumnName = "picture_id")
 	private Picture team_picture;
 	
-	@ManyToMany(mappedBy = "user_events")
+	@ManyToMany(mappedBy = "user_events", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<User> users;
 	
 	@ManyToOne(cascade = CascadeType.ALL)

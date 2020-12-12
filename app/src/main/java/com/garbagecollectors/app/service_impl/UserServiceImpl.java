@@ -45,4 +45,5 @@ public class UserServiceImpl implements UserService {
 	public List<UserStatsDto> findScoreBoard() {
 		return repository.findScoreBoard();
 	}
+
 }

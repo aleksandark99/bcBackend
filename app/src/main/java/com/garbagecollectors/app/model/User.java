@@ -94,7 +94,7 @@ public class User {
 	@JoinColumn(name = "user_profile_id", referencedColumnName = "profile_id")
 	private Profile userProfile;
 	
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinTable(name="user_events", 
 	joinColumns=@JoinColumn(name="user_id", referencedColumnName = "user_id"), 
 	inverseJoinColumns = @JoinColumn(name="event_id", referencedColumnName = "event_id") )
