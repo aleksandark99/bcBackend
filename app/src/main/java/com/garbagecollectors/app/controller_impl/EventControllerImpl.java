@@ -93,7 +93,8 @@ public class EventControllerImpl {
     		
     	}
 
-        
+       	eventDTO.setSuccesful(event.isSuccessfull());
+        eventDTO.setAttendees(event.getUsers().size());
         eventDTO.setDateCreated(event.getStart_date());
         eventDTO.setEventDescription(event.getEvent_desc());
         eventDTO.setEventName(event.getEvent_name());

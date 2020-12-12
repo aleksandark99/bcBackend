@@ -12,8 +12,8 @@ import lombok.Setter;
 public class SingleEventDTO {
 
     private String eventName, imgBeforeURL, imgAfterURL, imgTeamURL, dateCreated, organizedBy, locationURL, locationString, eventDescription;
-    private boolean isFinished, going, organizedByThisUser;
-    private int organisatorId;
+    private boolean isFinished, going, organizedByThisUser, succesful;
+    private int organisatorId, attendees;
     private StringResponse stringResponse;
     
 }
