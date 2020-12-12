@@ -11,5 +11,6 @@ public interface EventService {
     Set<Event> findEventsByUser(int userId);
     Set<Event> findByFinishedAndVerified(boolean finished, boolean verified);
     
+    Set<Event> findUnfinishedEvents();
 
 }

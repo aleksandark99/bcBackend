@@ -16,4 +16,8 @@ public class EventRequest {
     private String eventDescription;
 
     private int userId;
+
+    private String locationURL;
+
+    private String locationString;
 }

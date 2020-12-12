@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.garbagecollectors.app.controller_impl.EventControllerImpl;
+import com.garbagecollectors.app.dto.EventRequest;
 import com.garbagecollectors.app.dto.EventsResponse;
 import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Event;
@@ -37,11 +39,10 @@ public class EventController {
         return eventControllerImpl.getEventsByUser(userId);
     }
 
-    @PostMapping(value = "user/event")
-    @ResponseBody
-    public StringResponse createEvent(@RequestParam("image") MultipartFile image) throws IOException {
+    @PostMapping(value = "user/event", consumes = {"multipart/form-data"})
+    public StringResponse createEvent(@RequestParam("image") MultipartFile image, @ModelAttribute EventRequest event) throws IOException {
 
-        return eventControllerImpl.createEvent(image);
+        return eventControllerImpl.createEvent(image, event);
     }
     
     @GetMapping(value = "events/finished/verified")
@@ -53,6 +54,15 @@ public class EventController {
     	return response;
     	
     }
-
+    
+    @GetMapping(value = "events/finished/unverified")
+    @ResponseBody
+    public EventsResponse getFinishedAndNotVerifiedEvents() {
+    	
+    	EventsResponse response = eventControllerImpl.getFinishedAndNotVerifiedEvents();
+    	
+    	return response;
+    	
+    }
 
 }
