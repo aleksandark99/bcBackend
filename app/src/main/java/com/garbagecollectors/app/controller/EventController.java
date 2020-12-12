@@ -5,6 +5,7 @@ import com.garbagecollectors.app.dto.EventRequest;
 import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,11 +31,10 @@ public class EventController {
         return eventControllerImpl.getEventsByUser(userId);
     }
 
-    @PostMapping(value = "user/event")
-    @ResponseBody
-    public StringResponse createEvent(@RequestParam("image") MultipartFile image) throws IOException {
+    @PostMapping(value = "user/event", consumes = {"multipart/form-data"})
+    public StringResponse createEvent(@RequestParam("image") MultipartFile image, @ModelAttribute EventRequest event) throws IOException {
 
-        return eventControllerImpl.createEvent(image);
+        return eventControllerImpl.createEvent(image, event);
     }
 
 

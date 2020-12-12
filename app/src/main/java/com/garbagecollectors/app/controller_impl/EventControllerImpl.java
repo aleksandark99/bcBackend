@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Base64;
 import java.util.Locale;
 import java.util.Set;
@@ -54,7 +56,7 @@ public class EventControllerImpl {
         return eventService.findEventsByUser(userId);
     }
 
-    public StringResponse createEvent(MultipartFile file) throws IOException {
+    public StringResponse createEvent(MultipartFile file, EventRequest event) throws IOException {
 
         String jwtToken = hsr.getHeader("Authorization").substring(7);
         User user = userService.findByJwt(jwtToken);
@@ -87,8 +89,10 @@ public class EventControllerImpl {
             pictureService.save(startPicture);
 
             Event newEvent = new Event();
-//            newEvent.setEvent_name(event.getEventName());
-//            newEvent.setEvent_desc(event.getEventDescription());
+            newEvent.setEvent_name(event.getEventName());
+            newEvent.setEvent_desc(event.getEventDescription());
+
+            newEvent.setStart_date(getTodayDateTime());
             newEvent.setIsOrganizedBy(user);
             newEvent.setStart_picture(startPicture);
 
@@ -107,6 +111,14 @@ public class EventControllerImpl {
         }
 
         return response;
+    }
+
+    private static String getTodayDateTime(){
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+
+        return dtf.format(now);
     }
 
 }
