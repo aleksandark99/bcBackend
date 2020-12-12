@@ -14,5 +14,6 @@ public class SingleEventDTO {
     private String eventName, imgBeforeURL, imgAfterURL, imgTeamURL, dateCreated, organizedBy, locationURL, locationString, eventDescription;
     private boolean isFinished, going;
     private int organisatorId;
+    private StringResponse stringResponse;
     
 }

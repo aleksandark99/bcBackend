@@ -63,16 +63,29 @@ public class EventControllerImpl {
 
     public SingleEventDTO getEventById(int eventId){
     	
-    	String jwt = hsr.getHeader("Authorization").substring(7);
+    	boolean going;
     	
     	SingleEventDTO eventDTO = new SingleEventDTO();
-
-        Event event = eventService.findEventById(eventId);
+    	
+    	String authHeader = hsr.getHeader("Authorization");
+    	
+    	if (authHeader == null ) { 
+    		
+    		going = false;
+    		
+    	}
+        	
+    	String token = authHeader.substring(7);
+       
+       	Event event = eventService.findEventById(eventId);
+       
+       	if (event == null) eventDTO.setStringResponse(new StringResponse(200, false, messageSource.getMessage("bad.event.id", null, new Locale("en"))));
         
-        if (jwt != null) {
-    		User loggedInUser = userService.findByJwt(jwt);
+     	User loggedInUser = userService.findByJwt(token);
+       	
+       	if (loggedInUser != null) {
 
-			boolean going = loggedInUser.getUser_events().contains(event);
+			going = loggedInUser.getUser_events().contains(event);
     		
     		eventDTO.setGoing(going);
     		
@@ -129,7 +142,6 @@ public class EventControllerImpl {
                  dto.setOrganizedBy(userProfile.getFirst_name() + " " + userProfile.getLast_name());
                  dto.setUserId(event.getIsOrganizedBy().getUser_id());
 
-                 dto.setSuccessfull(event.isSuccessfull());
 
                  listEventDto.add(dto);
              });
