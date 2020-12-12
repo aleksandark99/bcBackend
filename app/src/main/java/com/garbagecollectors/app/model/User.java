@@ -70,7 +70,7 @@ import lombok.Setter;
 		+ "FROM users u "
 		+ "JOIN user_events ue ON ue.user_id = u.user_id "
 		+ "JOIN events e ON ue.event_id = e.event_id "
-		+ "JOIN profile p ON u.profile_id = p.profile_id "
+		+ "JOIN profiles p ON u.user_profile_id = p.profile_id "
 		+ "WHERE e.verified IS TRUE "
 		+ "GROUP BY u.user_id"
 				
