@@ -103,6 +103,7 @@ public class EventControllerImpl {
         eventDTO.setLocationString(event.getEvent_location());
         eventDTO.setLocationURL(event.getLocation_url());
         eventDTO.setFinished(event.isFinished());
+        eventDTO.setVerified(event.isVerified());
 
         Profile userProfile = event.getIsOrganizedBy().getUserProfile();
 
