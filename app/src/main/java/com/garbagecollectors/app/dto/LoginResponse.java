@@ -1,27 +1,21 @@
 package com.garbagecollectors.app.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class LoginResponse {
 
     private StringResponse stringResponse;
-    private String jwt;
+    private String jwt, role;
 
-    public LoginResponse(){
+    
 
-    }
 
-    public StringResponse getStringResponse() {
-        return stringResponse;
-    }
-
-    public void setStringResponse(StringResponse stringResponse) {
-        this.stringResponse = stringResponse;
-    }
-
-    public String getJwt() {
-        return jwt;
-    }
-
-    public void setJwt(String jwt) {
-        this.jwt = jwt;
-    }
+    
 }

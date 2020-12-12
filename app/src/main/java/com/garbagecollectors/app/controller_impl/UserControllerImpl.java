@@ -117,7 +117,8 @@ public class UserControllerImpl {
                 user.setJwt(jwt);
 
                 userService.save(user);
-
+                
+                response.setRole(String.valueOf(user.getUser_role()));
                 response.setJwt(user.getJwt());
                 response.setStringResponse(new StringResponse(200, false, messageSource.getMessage("good.credentials", null, new Locale("en"))));
 
