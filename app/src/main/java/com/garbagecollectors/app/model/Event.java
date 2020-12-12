@@ -15,8 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import org.springframework.lang.NonNull;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -53,8 +51,8 @@ public class Event {
 	@Column(nullable = true, unique = false)
 	private String due_date;
 
-	@Column(nullable = false, unique = false)
-	private boolean isVerified;
+	@Column(name = "verified", nullable = false, unique = false)
+	private boolean verified;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="start_pic_id", referencedColumnName = "picture_id")
@@ -73,4 +71,11 @@ public class Event {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private User isOrganizedBy;
+	
+	@Column(name = "finished", nullable = true, unique = false)
+	private boolean finished;
+	
+	@Column(unique = false, nullable = true)
+    private String location_url;
+	
 }

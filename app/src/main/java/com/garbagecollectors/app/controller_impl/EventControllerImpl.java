@@ -1,6 +1,29 @@
 package com.garbagecollectors.app.controller_impl;
 
-import com.garbagecollectors.app.dto.EventRequest;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.garbagecollectors.app.dto.EventDto;
+import com.garbagecollectors.app.dto.EventsResponse;
 import com.garbagecollectors.app.dto.ImgBB;
 import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Event;
@@ -9,20 +32,6 @@ import com.garbagecollectors.app.model.User;
 import com.garbagecollectors.app.service.EventService;
 import com.garbagecollectors.app.service.PictureService;
 import com.garbagecollectors.app.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.http.*;
-import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.util.Base64;
-import java.util.Locale;
-import java.util.Set;
 
 @Service
 public class EventControllerImpl {
@@ -107,6 +116,66 @@ public class EventControllerImpl {
         }
 
         return response;
+    }
+    
+    public EventsResponse getFinishedAndVerifiedEvents() {
+    	
+    	EventsResponse response = new EventsResponse();
+    	
+    	List<EventDto> listEventDto = new ArrayList<EventDto>();
+    	
+    	Set<Event> events = eventService.findByFinishedAndVerified(true, true);
+    	
+    	if (!events.isEmpty()) events.stream().forEach(event -> {
+    		
+    		EventDto dto = new EventDto(); 
+    		
+    		dto.setEventId(event.getEvent_id());
+    		dto.setEventDescription(event.getEvent_desc());
+    		dto.setEventName(event.getEvent_name());
+    		dto.setImageURL(event.getLocation_url());
+
+    		listEventDto.add(dto);
+    		
+    		
+    	});
+    	
+    	response.setEvents(listEventDto);
+        response.setStringResponse(new StringResponse(200, false, messageSource.getMessage("finished.verified", null, new Locale("en"))));
+
+    	
+    	return response;
+    	
+    }
+    
+    public EventsResponse getFinishedAndNotVerifiedEvents() {
+    	
+    	EventsResponse response = new EventsResponse();
+    	
+    	List<EventDto> listEventDto = new ArrayList<EventDto>();
+    	
+    	Set<Event> events = eventService.findByFinishedAndVerified(true, false);
+    	
+    	if (!events.isEmpty()) events.stream().forEach(event -> {
+    		
+    		EventDto dto = new EventDto(); 
+    		
+    		dto.setEventId(event.getEvent_id());
+    		dto.setEventDescription(event.getEvent_desc());
+    		dto.setEventName(event.getEvent_name());
+    		dto.setImageURL(event.getLocation_url());
+
+    		listEventDto.add(dto);
+    		
+    		
+    	});
+    	
+    	response.setEvents(listEventDto);
+        response.setStringResponse(new StringResponse(200, false, messageSource.getMessage("finished.non.verified", null, new Locale("en"))));
+
+    	
+    	return response;
+    	
     }
 
 }

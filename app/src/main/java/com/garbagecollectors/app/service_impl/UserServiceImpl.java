@@ -1,10 +1,13 @@
 package com.garbagecollectors.app.service_impl;
 
 
+import com.garbagecollectors.app.dto.UserStatsDto;
 import com.garbagecollectors.app.model.User;
 import com.garbagecollectors.app.repository.UserRepository;
 import com.garbagecollectors.app.service.UserService;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -37,4 +40,9 @@ public class UserServiceImpl implements UserService {
     public User findByPassword(String password) {
         return repository.findByPassword(password);
     }
+
+	@Override
+	public List<UserStatsDto> findScoreBoard() {
+		return repository.findScoreBoard();
+	}
 }

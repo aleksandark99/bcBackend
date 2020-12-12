@@ -9,9 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class UserDto {
+public class EventDto {
 	
-	private int id, score, eventsCount;
-	private String firstName, lastName;
+	private int eventId;
+	private String imageURL, eventName, eventDescription;
 	
+
 }

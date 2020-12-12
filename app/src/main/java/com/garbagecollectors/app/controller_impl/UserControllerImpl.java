@@ -1,6 +1,7 @@
 package com.garbagecollectors.app.controller_impl;
 
 
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import com.garbagecollectors.app.dto.LoginResponse;
 import com.garbagecollectors.app.dto.RegisterRequest;
 import com.garbagecollectors.app.dto.ScoreBoardResponse;
 import com.garbagecollectors.app.dto.StringResponse;
+import com.garbagecollectors.app.dto.UserStatsDto;
 import com.garbagecollectors.app.model.Profile;
 import com.garbagecollectors.app.model.User;
 import com.garbagecollectors.app.model.enums.ERole;
@@ -109,7 +111,21 @@ public class UserControllerImpl {
     
     public ScoreBoardResponse getScoreBoard() {
     	
-    	return null;
+    	List<UserStatsDto> users = null;
+    	
+    	ScoreBoardResponse response = new ScoreBoardResponse();
+    	
+    	users = userService.findScoreBoard();
+    	
+    	if (users == null) {
+    		response.setResponse(new StringResponse(200, true,  messageSource.getMessage("fetch.error", null, new Locale("en"))));
+    	} else {
+    		response.setUsers(users);
+    		response.setResponse(new StringResponse(200, true,  messageSource.getMessage("fetch.scoreboard", null, new Locale("en"))));
+
+    	}
+    	
+    	return response;
     }
 
 }

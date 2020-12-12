@@ -13,6 +13,8 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
 
     @Query(value = "Select * from events where is_organized_by_user_id = :userId", nativeQuery = true)
     Set<Event> findByUser (@Param("userId") int userId);
-
-
+    
+    //eventi koje je user zavrsio a admin nije verifikovao
+    Set<Event> findByFinishedAndVerified(boolean finished, boolean verified);
+    
 }

@@ -1,5 +1,7 @@
 package com.garbagecollectors.app;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
@@ -7,13 +9,17 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+import com.garbagecollectors.app.repository.EventRepository;
 import com.garbagecollectors.app.security.JwtFilter;
 
 @SpringBootApplication
 @ComponentScan(basePackages = { "com.garbagecollectors.app" })
 @EnableJpaRepositories(basePackages = { "com.garbagecollectors.app" })
-public class GarbageCollectorsApplication {
-
+public class GarbageCollectorsApplication implements CommandLineRunner{
+	
+	@Autowired
+	EventRepository repo;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(GarbageCollectorsApplication.class, args);
 	}
@@ -27,6 +33,12 @@ public class GarbageCollectorsApplication {
 		registrationBean.addUrlPatterns("/garbagecollectors/user/*");
 
 		return registrationBean;
+	}
+
+	@Override
+	public void run(String... args) throws Exception {
+		// TODO Auto-generated method stub
+		//System.out.println(repo.findByFinishedAndVerified(true, true).size());
 	}
 
 }

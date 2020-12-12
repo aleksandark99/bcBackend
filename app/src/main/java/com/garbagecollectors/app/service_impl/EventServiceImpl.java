@@ -30,4 +30,9 @@ public class EventServiceImpl implements EventService {
     public Set<Event> findEventsByUser(int userId) {
         return repository.findByUser(userId);
     }
+
+	@Override
+	public Set<Event> findByFinishedAndVerified(boolean finished, boolean verified) {
+		return repository.findByFinishedAndVerified(finished, verified);
+	}
 }
