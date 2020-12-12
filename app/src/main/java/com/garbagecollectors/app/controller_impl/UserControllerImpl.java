@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +24,8 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.garbagecollectors.app.dto.ConfirmeRequest;
+import com.garbagecollectors.app.dto.EventForUserDto;
+import com.garbagecollectors.app.dto.EventsResponse;
 import com.garbagecollectors.app.dto.IdRequest;
 import com.garbagecollectors.app.dto.ImgBB;
 import com.garbagecollectors.app.dto.LoginRequest;
@@ -215,6 +218,16 @@ public class UserControllerImpl {
     	
     	return response;
     }
+    
+    
+    public EventsResponse getEventsForUser(int userId) {
+    	
+    	List<EventForUserDto> events = userService.findEventsForUser(userId);
+    	
+    	return null;
+    }
+    
+    
     
     private String uploadImage(MultipartFile image) throws IOException {
     	if(!image.isEmpty()) {

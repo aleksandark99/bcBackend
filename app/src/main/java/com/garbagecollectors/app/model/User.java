@@ -47,6 +47,21 @@ import lombok.Setter;
 					   @ColumnResult(name="last_name", type=String.class),
 					
 			})} ),
+	
+	@SqlResultSetMapping(name = "findEventsForUserMapping",
+			classes = {@ConstructorResult(targetClass=com.garbagecollectors.app.dto.EventForUserDto.class,
+			columns = {@ColumnResult(name="eventId", type=Integer.class),
+					   @ColumnResult(name="imageURLstart", type=String.class),
+					   @ColumnResult(name="imageURLend", type=String.class),
+					   @ColumnResult(name="imageURLteam", type=String.class),
+					   @ColumnResult(name="event_name", type=String.class),
+					   @ColumnResult(name="successfull", type=Boolean.class),
+			
+	})} ),
+
+
+			
+	
 	})
 @NamedNativeQueries(value = {
 	
@@ -60,6 +75,18 @@ import lombok.Setter;
 		+ "GROUP BY u.user_id"
 				
 		,resultSetMapping = "findScoreBoardMapping"),
+		
+		@NamedNativeQuery(name = "findEventsForUser", query = "" 
+		+ "select e.event_id, picStart.picture_url AS imageURLstart, picEnd.picture_url AS imageURLend, picTeam.picture_url AS imageURLteam, e.event_name, e.successfull " 
+		+ "from users u " 
+		+ "join user_events ue ON ue.user_id = u.user_id "  
+		+ "join events e ON e.event_id = ue.event_id " 
+		+ "join pictures picStart ON picStart.picture_id = e.start_pic_id " 
+		+ "join pictures picEnd ON picEnd.picture_id = e.end_pic_id "  
+		+ "join pictures picTeam ON picTeam.picture_id = e.group_pic_id " 
+		+ "where u.user_id = 1 AND e.finished IS TRUE AND e.verified IS TRUE"
+						
+		,resultSetMapping = "findEventsForUserMapping"),
 
 	})
 @Table(name="users")
@@ -82,7 +109,6 @@ public class User {
 	@Column(length = 100, nullable = false, name = "password")
 	private String password;
 
-	@NonNull
 	@Column(nullable = true, name = "jwt")
 	private String jwt;
 	

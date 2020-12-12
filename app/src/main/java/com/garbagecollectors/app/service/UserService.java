@@ -2,6 +2,7 @@ package com.garbagecollectors.app.service;
 
 import java.util.List;
 
+import com.garbagecollectors.app.dto.EventForUserDto;
 import com.garbagecollectors.app.dto.UserStatsDto;
 import com.garbagecollectors.app.model.User;
 
@@ -16,4 +17,6 @@ public interface UserService {
     User findByPassword(String password);
     
     List<UserStatsDto> findScoreBoard();
+    
+    List<EventForUserDto> findEventsForUser(int userId);
 }

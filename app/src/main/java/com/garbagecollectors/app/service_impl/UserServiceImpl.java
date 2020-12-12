@@ -1,6 +1,7 @@
 package com.garbagecollectors.app.service_impl;
 
 
+import com.garbagecollectors.app.dto.EventForUserDto;
 import com.garbagecollectors.app.dto.UserStatsDto;
 import com.garbagecollectors.app.model.User;
 import com.garbagecollectors.app.repository.UserRepository;
@@ -44,5 +45,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<UserStatsDto> findScoreBoard() {
 		return repository.findScoreBoard();
+	}
+
+	@Override
+	public List<EventForUserDto> findEventsForUser(int userId) {
+		return repository.findEventsForUser(userId);
 	}
 }

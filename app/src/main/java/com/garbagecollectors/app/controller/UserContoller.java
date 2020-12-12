@@ -4,6 +4,7 @@ package com.garbagecollectors.app.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.websocket.server.PathParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.garbagecollectors.app.controller_impl.UserControllerImpl;
 import com.garbagecollectors.app.dto.ConfirmeRequest;
+import com.garbagecollectors.app.dto.EventsResponse;
 import com.garbagecollectors.app.dto.IdRequest;
 import com.garbagecollectors.app.dto.LoginRequest;
 import com.garbagecollectors.app.dto.LoginResponse;
@@ -101,6 +103,16 @@ public class UserContoller {
     public StringResponse finishEvent(@RequestParam("afterImage") MultipartFile afterImage, @RequestParam("teamImage") MultipartFile teamImage, @ModelAttribute IdRequest eventId) throws IOException {
     	
     	StringResponse response = userControllerImpl.finishEvent(afterImage, teamImage, eventId);
+    	
+    	return response;
+    	
+    }
+    
+    @GetMapping(value = "user/events/finished/verified/{userId}")
+    @ResponseBody
+    public EventsResponse getEventsForUser(@PathParam("userId") int userId) {
+    	
+    	EventsResponse response = userControllerImpl.getEventsForUser(userId);
     	
     	return response;
     	
