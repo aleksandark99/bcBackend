@@ -47,8 +47,8 @@ public class UserServiceImpl implements UserService {
 		return repository.findScoreBoard();
 	}
 
-	@Override
 	public List<EventForUserDto> findEventsForUser(int userId) {
 		return repository.findEventsForUser(userId);
 	}
+
 }

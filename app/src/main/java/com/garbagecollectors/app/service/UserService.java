@@ -17,6 +17,9 @@ public interface UserService {
     User findByPassword(String password);
     
     List<UserStatsDto> findScoreBoard();
+
     
     List<EventForUserDto> findEventsForUser(int userId);
+
+
 }

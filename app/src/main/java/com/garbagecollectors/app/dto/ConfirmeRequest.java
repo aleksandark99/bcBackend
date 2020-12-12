@@ -10,8 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ConfirmeRequest {
-	
-	private int userId;
+
 	private int eventId;
 
 }
