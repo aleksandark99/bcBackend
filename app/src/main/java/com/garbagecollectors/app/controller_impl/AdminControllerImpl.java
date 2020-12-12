@@ -38,10 +38,13 @@ public class AdminControllerImpl {
     		EventDto dto = new EventDto(); 
     		
     		dto.setEventId(event.getEvent_id());
-    		dto.setEventDescription(event.getEvent_desc());
+    		dto.setImageURLend(event.getEnd_picture().getPicture_url());
     		dto.setEventName(event.getEvent_name());
-    		dto.setImageURL(event.getLocation_url());
-
+    		dto.setOrganizedBy(event.getIsOrganizedBy().getUserProfile().getFirst_name() + " " + event.getIsOrganizedBy().getUserProfile().getLast_name());
+    		dto.setEventDescription(event.getEvent_desc());
+    		dto.setSuccessfull(event.isSuccessfull());
+    		
+    		
     		listEventDto.add(dto);
     		
     		

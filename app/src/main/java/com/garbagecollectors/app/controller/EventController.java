@@ -33,7 +33,7 @@ public class EventController {
         return eventControllerImpl.getEventById(eventId);
     }
 
-    @GetMapping(value = "/events/{userId}")
+    @GetMapping(value = "/events/{userId}") //pristup: svi
     public Set<Event> getEventsByUser(@PathVariable("userId") int userId){
 
         return eventControllerImpl.getEventsByUser(userId);
@@ -45,7 +45,7 @@ public class EventController {
         return eventControllerImpl.createEvent(image, event);
     }
     
-    @GetMapping(value = "events/finished/verified")
+    @GetMapping(value = "events/finished/verified") //pristup: svi
     @ResponseBody
     public EventsResponse getFinishedAndVerifiedEvents() {
     	

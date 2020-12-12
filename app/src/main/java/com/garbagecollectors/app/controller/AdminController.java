@@ -17,7 +17,7 @@ public class AdminController {
 		private AdminControllerImpl adminControllerImpl;
 	
 		//eventi koje je user zavrsio a admin nije verifikovao
-	 	@GetMapping(value = "events/finished/unverified")
+	 	@GetMapping(value = "events/finished/unverified") //pristup: admin
 	    @ResponseBody
 	    public EventsResponse getFinishedAndNotVerifiedEvents() {
 	    	

@@ -14,7 +14,7 @@ import com.garbagecollectors.app.security.JwtFilter;
 @ComponentScan(basePackages = { "com.garbagecollectors.app" })
 @EnableJpaRepositories(basePackages = { "com.garbagecollectors.app" })
 public class GarbageCollectorsApplication implements CommandLineRunner{
-	
+
 	
 	public static void main(String[] args) {
 		SpringApplication.run(GarbageCollectorsApplication.class, args);
@@ -37,6 +37,8 @@ public class GarbageCollectorsApplication implements CommandLineRunner{
 		/*
 		 * Only for testing
 		 */
+		
+		
 		
 	}
 

@@ -167,8 +167,9 @@ public class EventControllerImpl {
     		dto.setEventId(event.getEvent_id());
     		dto.setEventDescription(event.getEvent_desc());
     		dto.setEventName(event.getEvent_name());
-    		dto.setImageURL(event.getLocation_url());
-
+    		dto.setImageURLend(event.getStart_picture().getPicture_url());
+    		dto.setSuccessfull(event.isSuccessfull());
+    			
     		listEventDto.add(dto);
     		
     		

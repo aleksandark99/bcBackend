@@ -55,7 +55,7 @@ public class Event {
 	@Column(name = "verified", nullable = false, unique = false)
 	private boolean verified;
 
-	@Column(nullable = false, unique = false)
+	@Column(nullable = true, unique = false)
 	private boolean finished;
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -75,6 +75,8 @@ public class Event {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	private User isOrganizedBy;
-	
+
+	@Column(nullable = true, unique = false)
+	private boolean successfull;
 	
 }
