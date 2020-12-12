@@ -2,6 +2,7 @@ package com.garbagecollectors.app.controller;
 
 import com.garbagecollectors.app.controller_impl.EventControllerImpl;
 import com.garbagecollectors.app.dto.EventRequest;
+import com.garbagecollectors.app.dto.EventResponse;
 import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Event;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,12 @@ public class EventController {
     public Set<Event> getEventsByUser(@PathVariable("userId") int userId){
 
         return eventControllerImpl.getEventsByUser(userId);
+    }
+
+    @GetMapping(value = "/events/unfinishedEvents")
+    public Set<EventResponse> getUnfinishedEvents(){
+
+        return eventControllerImpl.getUnfinishedEvents();
     }
 
     @PostMapping(value = "user/event", consumes = {"multipart/form-data"})

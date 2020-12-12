@@ -30,4 +30,10 @@ public class EventServiceImpl implements EventService {
     public Set<Event> findEventsByUser(int userId) {
         return repository.findByUser(userId);
     }
+
+    @Override
+    public Set<Event> findUnfinishedEvents() {
+
+        return (Set<Event>) repository.findUnfinishedEvents();
+    }
 }

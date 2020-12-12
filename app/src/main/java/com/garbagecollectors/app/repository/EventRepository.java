@@ -15,4 +15,11 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     Set<Event> findByUser (@Param("userId") int userId);
 
 
+
+
+
+    @Query(value = "Select * from events where finished is not true and is_verified is true", nativeQuery = true)
+    Set<Event> findUnfinishedEvents();
+
+
 }

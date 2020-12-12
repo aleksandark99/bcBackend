@@ -9,5 +9,6 @@ public interface EventService {
     Event save(Event event);
     Event findEventById(int eventId);
     Set<Event> findEventsByUser(int userId);
+    Set<Event> findUnfinishedEvents();
 
 }

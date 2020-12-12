@@ -1,6 +1,7 @@
 package com.garbagecollectors.app.controller_impl;
 
 import com.garbagecollectors.app.dto.EventRequest;
+import com.garbagecollectors.app.dto.EventResponse;
 import com.garbagecollectors.app.dto.ImgBB;
 import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Event;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Base64;
+import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
 
@@ -55,6 +57,28 @@ public class EventControllerImpl {
 
         return eventService.findEventsByUser(userId);
     }
+
+    public Set<EventResponse> getUnfinishedEvents(){
+
+        Set<EventResponse> findEvents = new HashSet<>();
+        Set<Event> events = eventService.findUnfinishedEvents();
+
+       for(Event e : events){
+
+            EventResponse eventResponse = new EventResponse();
+
+            eventResponse.setNameEvent(e.getEvent_name());
+            eventResponse.setEventDescription(e.getEvent_desc());
+            eventResponse.setImageURL(e.getStart_picture().getPicture_url());
+            eventResponse.setLocationString(e.getEvent_location());
+            eventResponse.setLocationURL(e.getLocation_url());
+
+            findEvents.add(eventResponse);
+
+       }
+       return findEvents;
+    }
+
 
     public StringResponse createEvent(MultipartFile file, EventRequest event) throws IOException {
 
@@ -91,6 +115,8 @@ public class EventControllerImpl {
             Event newEvent = new Event();
             newEvent.setEvent_name(event.getEventName());
             newEvent.setEvent_desc(event.getEventDescription());
+            newEvent.setEvent_location(event.getLocationString());
+            newEvent.setLocation_url(event.getLocationURL());
 
             newEvent.setStart_date(getTodayDateTime());
             newEvent.setIsOrganizedBy(user);

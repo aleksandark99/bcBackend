@@ -34,7 +34,6 @@ public class Event {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique = true, nullable = false)
 	private int event_id;
-	
 
 	@Column(unique = false, nullable = true)
 	private String event_name;
@@ -42,7 +41,9 @@ public class Event {
 	@Lob
 	@Column(unique = false, nullable = true)
 	private String event_desc;
-	
+
+	@Column(unique = false, nullable = true)
+	private String location_url;
 
 	@Column(unique = false, nullable = true)
 	private String event_location;
@@ -55,6 +56,9 @@ public class Event {
 
 	@Column(nullable = false, unique = false)
 	private boolean isVerified;
+
+	@Column(nullable = false, unique = false)
+	private boolean finished;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="start_pic_id", referencedColumnName = "picture_id")
