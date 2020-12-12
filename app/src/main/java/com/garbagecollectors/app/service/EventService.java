@@ -15,4 +15,5 @@ public interface EventService {
 
     void delete(int eventId);
     int getUsersNumForEvent(int eventId);
+    Set<Event> findEventsByUsername(String username);
 }

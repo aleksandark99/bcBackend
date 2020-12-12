@@ -62,5 +62,11 @@ public class EventServiceImpl implements EventService {
         return repository.getUsersNumForEvent(eventId);
     }
 
+    @Override
+    public Set<Event> findEventsByUsername(String username) {
+
+        return repository.findByUsername(username);
+    }
+
 
 }

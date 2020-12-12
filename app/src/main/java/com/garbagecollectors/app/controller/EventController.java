@@ -69,4 +69,10 @@ public class EventController {
         return eventControllerImpl.getUsersNumForEvent(eventId);
     }
 
+    @GetMapping("/events/all/{username}")
+    public EventsResponse getEventsByUserName(@PathVariable("username") String username){
+
+        return eventControllerImpl.getEventsByUsername(username);
+    }
+
 }

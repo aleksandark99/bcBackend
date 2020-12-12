@@ -296,4 +296,36 @@ public class EventControllerImpl {
         return usersNumDTO;
     }
 
+    public EventsResponse getEventsByUsername(String username){
+
+        EventsResponse response = new EventsResponse();
+
+        List<EventDto> listEventDto = new ArrayList<EventDto>();
+
+        Set<Event> eventsByUsername = eventService.findEventsByUsername(username);
+
+        if (!eventsByUsername.isEmpty()) eventsByUsername.stream().forEach(event -> {
+
+            EventDto dto = new EventDto();
+
+            dto.setEventId(event.getEvent_id());
+            dto.setEventDescription(event.getEvent_desc());
+            dto.setEventName(event.getEvent_name());
+            if (event.getStart_picture() != null) dto.setImageURLstart(event.getStart_picture().getPicture_url());
+
+            Profile userProfile = event.getIsOrganizedBy().getUserProfile();
+            dto.setOrganizedBy(userProfile.getFirst_name() + " " + userProfile.getLast_name());
+            dto.setUserId(event.getIsOrganizedBy().getUser_id());
+
+            dto.setSuccessfull(event.isSuccessfull());
+
+            listEventDto.add(dto);
+        });
+        response.setEvents(listEventDto);
+        response.setStringResponse(new StringResponse(200, false, messageSource.getMessage("events.by.username", null, new Locale("en"))));
+
+        return response;
+
+    }
+
 }

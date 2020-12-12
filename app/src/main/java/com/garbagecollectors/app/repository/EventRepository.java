@@ -30,4 +30,9 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query(value = "Select count(*) user_id from user_events where event_id = ?1", nativeQuery = true)
     int getUsersNumForEvent(int eventId);
 
+
+    @Query(value = "Select * from events e where e.event_id in (select event_id from user_events ue join users u " +
+            "on ue.user_id = u.user_id where u.username = ?1);", nativeQuery = true)
+    Set<Event> findByUsername(String username);
+
 }
