@@ -189,7 +189,7 @@ public class UserControllerImpl {
 
     				teamPicture.setEventEnd(event);
     				afterPicture.setEventTeam(event);
-    				
+    				event.setFinished(true);
     				eventService.save(event);
     				
     				response.setCode(200);
