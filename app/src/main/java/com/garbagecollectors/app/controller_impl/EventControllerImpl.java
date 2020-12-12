@@ -62,10 +62,23 @@ public class EventControllerImpl {
     private static String UPLOAD_ROOT = "https://api.imgbb.com/1/upload?key=b06a3582d53c4a0be976670478081f5c";
 
     public SingleEventDTO getEventById(int eventId){
+    	
+    	String jwt = hsr.getHeader("Authorization").substring(7);
+    	
+    	SingleEventDTO eventDTO = new SingleEventDTO();
 
         Event event = eventService.findEventById(eventId);
+        
+        if (jwt != null) {
+    		User loggedInUser = userService.findByJwt(jwt);
 
-        SingleEventDTO eventDTO = new SingleEventDTO();
+			boolean going = loggedInUser.getUser_events().contains(event);
+    		
+    		eventDTO.setGoing(going);
+    		
+    	}
+
+        
         eventDTO.setDateCreated(event.getStart_date());
         eventDTO.setEventDescription(event.getEvent_desc());
         eventDTO.setEventName(event.getEvent_name());

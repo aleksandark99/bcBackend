@@ -51,12 +51,12 @@ import lombok.Setter;
 @NamedNativeQueries(value = {
 	
 		@NamedNativeQuery(name = "findScoreBoard", query = "" 
-		+ "SELECT u.user_id, u.credit, count(ue.event_id) AS events_count, p.first_name, p.last_name " 
-		+ "FROM users u "  
+		+ "SELECT u.user_id, p.points_num, count(ue.event_id) AS events_count, p.first_name, p.last_name "
+		+ "FROM users u "
 		+ "JOIN user_events ue ON ue.user_id = u.user_id "
 		+ "JOIN events e ON ue.event_id = e.event_id "
 		+ "JOIN profile p ON u.profile_id = p.profile_id "
-		+ "WHERE u.user_id in (6) AND e.verified IS TRUE "
+		+ "WHERE e.verified IS TRUE "
 		+ "GROUP BY u.user_id"
 				
 		,resultSetMapping = "findScoreBoardMapping"),
@@ -103,6 +103,4 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "isOrganizedBy")
 	private Set<Event> eventWhichOrganized;
 	
-	@Column(name = "credit")
-	private Integer credit;
 }

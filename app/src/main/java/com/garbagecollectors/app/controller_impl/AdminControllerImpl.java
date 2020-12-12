@@ -16,6 +16,7 @@ import com.garbagecollectors.app.dto.EventsResponse;
 import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.dto.VerifyEventRequest;
 import com.garbagecollectors.app.model.Event;
+import com.garbagecollectors.app.model.Profile;
 import com.garbagecollectors.app.model.User;
 import com.garbagecollectors.app.model.enums.ERole;
 import com.garbagecollectors.app.service.EventService;
@@ -86,18 +87,17 @@ public class AdminControllerImpl {
 				//automatically sets verify to 'true'
 				 eventService.verifyAndSetIsSuccessful(request.isSuccessfull(), request.getEventId()); 
 				 
-				 //update points to user
-				if (request.getCredit() > 0) {
-					Event event = eventService.findEventById(request.getEventId());
-					
-					User u = event.getIsOrganizedBy();
-					
-					u.setCredit(u.getCredit()+request.getCredit());
-					
-					userService.save(u);
-					
-				}
+				 Event event = eventService.findEventById(request.getEventId());
+				 
+				 User u = event.getIsOrganizedBy();
 				
+				 Profile userProfile = u.getUserProfile();
+					
+				 if (event.isSuccessfull()) userProfile.setOrganized_events_num(userProfile.getOrganized_events_num()+1);
+					
+					
+				 userService.save(u);
+					
 				 return new StringResponse(200, false, messageSource.getMessage("updated.event", null, new Locale("en")));
 				 
 			 } else {
