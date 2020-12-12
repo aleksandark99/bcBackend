@@ -182,35 +182,7 @@ public class EventControllerImpl {
     	
     }
     
-    public EventsResponse getFinishedAndNotVerifiedEvents() {
-    	
-    	EventsResponse response = new EventsResponse();
-    	
-    	List<EventDto> listEventDto = new ArrayList<EventDto>();
-    	
-    	Set<Event> events = eventService.findByFinishedAndVerified(true, false);
-    	
-    	if (!events.isEmpty()) events.stream().forEach(event -> {
-    		
-    		EventDto dto = new EventDto(); 
-    		
-    		dto.setEventId(event.getEvent_id());
-    		dto.setEventDescription(event.getEvent_desc());
-    		dto.setEventName(event.getEvent_name());
-    		dto.setImageURL(event.getLocation_url());
 
-    		listEventDto.add(dto);
-    		
-    		
-    	});
-    	
-    	response.setEvents(listEventDto);
-        response.setStringResponse(new StringResponse(200, false, messageSource.getMessage("finished.non.verified", null, new Locale("en"))));
-
-    	
-    	return response;
-    	
-    }
 
     private static String getTodayDateTime(){
 

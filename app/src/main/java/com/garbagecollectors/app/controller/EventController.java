@@ -55,14 +55,6 @@ public class EventController {
     	
     }
     
-    @GetMapping(value = "events/finished/unverified")
-    @ResponseBody
-    public EventsResponse getFinishedAndNotVerifiedEvents() {
-    	
-    	EventsResponse response = eventControllerImpl.getFinishedAndNotVerifiedEvents();
-    	
-    	return response;
-    	
-    }
+   
 
 }
