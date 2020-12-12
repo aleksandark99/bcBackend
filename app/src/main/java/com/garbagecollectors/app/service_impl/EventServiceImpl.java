@@ -49,5 +49,18 @@ public class EventServiceImpl implements EventService {
 		
 	}
 
+    @Override
+    public void delete(int eventId) {
+
+        repository.deleteById(eventId);
+        return;
+    }
+
+    @Override
+    public int getUsersNumForEvent(int eventId) {
+
+        return repository.getUsersNumForEvent(eventId);
+    }
+
 
 }

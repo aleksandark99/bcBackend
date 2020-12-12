@@ -3,23 +3,15 @@ package com.garbagecollectors.app.controller;
 import java.io.IOException;
 import java.util.Set;
 
-import com.garbagecollectors.app.dto.SingleEventDTO;
+import com.garbagecollectors.app.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.garbagecollectors.app.controller_impl.EventControllerImpl;
-import com.garbagecollectors.app.dto.EventRequest;
-import com.garbagecollectors.app.dto.EventsResponse;
-import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Event;
+
+import javax.websocket.server.PathParam;
 
 @RestController
 @RequestMapping("/garbagecollectors")
@@ -64,7 +56,17 @@ public class EventController {
 
         return response;
     }
-    
-   
+
+    @DeleteMapping("/event/remove/{eventId}")
+    public StringResponse deleteEvent(@PathVariable("eventId") int eventId){
+
+        return eventControllerImpl.deleteEvent(eventId);
+    }
+
+    @GetMapping("/event/goingNumber/{id}")
+    public UsersNumForEventDTO getUsersNumForEvent(@PathVariable("id") int eventId){
+
+        return eventControllerImpl.getUsersNumForEvent(eventId);
+    }
 
 }

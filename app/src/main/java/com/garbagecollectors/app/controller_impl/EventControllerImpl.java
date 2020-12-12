@@ -13,6 +13,7 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.garbagecollectors.app.dto.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
@@ -26,12 +27,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.garbagecollectors.app.dto.EventDto;
-import com.garbagecollectors.app.dto.EventRequest;
-import com.garbagecollectors.app.dto.EventsResponse;
-import com.garbagecollectors.app.dto.ImgBB;
-import com.garbagecollectors.app.dto.SingleEventDTO;
-import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Event;
 import com.garbagecollectors.app.model.Picture;
 import com.garbagecollectors.app.model.Profile;
@@ -260,6 +255,44 @@ public class EventControllerImpl {
         LocalDateTime now = LocalDateTime.now();
 
         return dtf.format(now);
+    }
+
+    public  StringResponse deleteEvent(int eventId){
+
+        StringResponse response = new StringResponse();
+
+        Event event = eventService.findEventById(eventId);
+
+        if(event != null){
+            eventService.delete(eventId);
+            response.setCode(200);
+            response.setError(false);
+            response.setMessage(messageSource.getMessage("event.has.removed", null, new Locale("en")));
+        }else {
+            response.setCode(200);
+            response.setError(true);
+            response.setMessage(messageSource.getMessage("event.has.not.removed", null, new Locale("en")));
+        }
+
+        return response;
+    }
+
+    public UsersNumForEventDTO getUsersNumForEvent (int eventId){
+
+        StringResponse response = new StringResponse();
+
+        UsersNumForEventDTO usersNumDTO = new UsersNumForEventDTO();
+
+        int userNum = eventService.getUsersNumForEvent(eventId);
+        usersNumDTO.setUsersNum(userNum);
+
+        response.setCode(200);
+        response.setError(false);
+        response.setMessage(messageSource.getMessage("event.users.num", null, new Locale("en")));
+
+        usersNumDTO.setResponse(response);
+
+        return usersNumDTO;
     }
 
 }

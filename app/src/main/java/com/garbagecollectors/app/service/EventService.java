@@ -13,4 +13,6 @@ public interface EventService {
     Set<Event> findByUnfinishedAndUnverified();
     void verifyAndSetIsSuccessful(boolean successful, int eventId);
 
+    void delete(int eventId);
+    int getUsersNumForEvent(int eventId);
 }

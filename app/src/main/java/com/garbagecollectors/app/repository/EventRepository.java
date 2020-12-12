@@ -27,7 +27,7 @@ public interface EventRepository extends JpaRepository<Event, Integer> {
     @Query(value = "UPDATE Event e SET e.verified = TRUE, e.successfull = ?1 WHERE e.event_id = ?2")
     void verifyAndSetIsSuccessful(boolean successfull, int eventId);
     
-
-
+    @Query(value = "Select count(*) user_id from user_events where event_id = ?1", nativeQuery = true)
+    int getUsersNumForEvent(int eventId);
 
 }
