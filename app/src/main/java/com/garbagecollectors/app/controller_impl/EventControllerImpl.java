@@ -14,6 +14,8 @@ import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.garbagecollectors.app.dto.*;
+import com.garbagecollectors.app.model.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
@@ -27,12 +29,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.garbagecollectors.app.dto.EventDto;
-import com.garbagecollectors.app.dto.EventRequest;
-import com.garbagecollectors.app.dto.EventResponse;
-import com.garbagecollectors.app.dto.EventsResponse;
-import com.garbagecollectors.app.dto.ImgBB;
-import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Event;
 import com.garbagecollectors.app.model.Picture;
 import com.garbagecollectors.app.model.User;
@@ -61,9 +57,31 @@ public class EventControllerImpl {
 
     private static String UPLOAD_ROOT = "https://api.imgbb.com/1/upload?key=b06a3582d53c4a0be976670478081f5c";
 
-    public Event getEventById(int eventId){
+    public SingleEventDTO getEventById(int eventId){
 
-        return eventService.findEventById(eventId);
+        Event event = eventService.findEventById(eventId);
+
+        SingleEventDTO eventDTO = new SingleEventDTO();
+        eventDTO.setDateCreated(event.getStart_date());
+        eventDTO.setEventDescription(event.getEvent_desc());
+        eventDTO.setEventName(event.getEvent_name());
+
+        String imageAfterURL = (event.getEnd_picture() == null ? null : event.getEnd_picture().getPicture_url());
+        String imageTeamURL =(event.getTeam_picture() == null ? null : event.getTeam_picture().getPicture_url());
+
+        eventDTO.setImgAfterURL(imageAfterURL);
+        eventDTO.setImgBeforeURL(event.getStart_picture().getPicture_url());
+        eventDTO.setImgTeamURL(imageTeamURL);
+        eventDTO.setLocationString(event.getEvent_location());
+        eventDTO.setLocationURL(event.getLocation_url());
+        eventDTO.setFinished(event.isFinished());
+
+        Profile userProfile = event.getIsOrganizedBy().getUserProfile();
+
+        eventDTO.setOrganizedBy(userProfile.getFirst_name() + " " + userProfile.getLast_name());
+        eventDTO.setOrganisatorId(event.getIsOrganizedBy().getUser_id());
+
+        return eventDTO;
     }
 
     public Set<Event> getEventsByUser(int userId){
@@ -71,25 +89,36 @@ public class EventControllerImpl {
         return eventService.findEventsByUser(userId);
     }
 
-    public Set<EventResponse> getUnfinishedEvents(){
+    public EventsResponse getUnfinishedAndUnverifiedEvents(){
 
-        Set<EventResponse> findEvents = new HashSet<>();
-        Set<Event> events = eventService.findUnfinishedEvents();
+        EventsResponse response = new EventsResponse();
 
-       for(Event e : events){
+        List<EventDto> listEventDto = new ArrayList<>();
 
-            EventResponse eventResponse = new EventResponse();
+        Set<Event> events = eventService.findByUnfinishedAndUnverified();
 
-            eventResponse.setNameEvent(e.getEvent_name());
-            eventResponse.setEventDescription(e.getEvent_desc());
-            eventResponse.setImageURL(e.getStart_picture().getPicture_url());
-            eventResponse.setLocationString(e.getEvent_location());
-            eventResponse.setLocationURL(e.getLocation_url());
+        if (!events.isEmpty()) events.stream().forEach(event -> {
 
-            findEvents.add(eventResponse);
+            EventDto dto = new EventDto();
 
-       }
-       return findEvents;
+            dto.setEventId(event.getEvent_id());
+            dto.setEventDescription(event.getEvent_desc());
+            dto.setEventName(event.getEvent_name());
+            dto.setImageURLstart(event.getStart_picture().getPicture_url());
+
+            Profile userProfile = event.getIsOrganizedBy().getUserProfile();
+            dto.setOrganizedBy(userProfile.getFirst_name() + " " + userProfile.getLast_name());
+            dto.setUserId(event.getIsOrganizedBy().getUser_id());
+
+            dto.setSuccessfull(event.isSuccessfull());
+
+            listEventDto.add(dto);
+        });
+
+        response.setEvents(listEventDto);
+        response.setStringResponse(new StringResponse(200, false, messageSource.getMessage("finished.verified", null, new Locale("en"))));
+
+        return response;
     }
 
 
@@ -167,8 +196,13 @@ public class EventControllerImpl {
     		dto.setEventId(event.getEvent_id());
     		dto.setEventDescription(event.getEvent_desc());
     		dto.setEventName(event.getEvent_name());
-    		dto.setImageURLend(event.getStart_picture().getPicture_url());
-    		dto.setSuccessfull(event.isSuccessfull());
+    		dto.setImageURLend(event.getEnd_picture().getPicture_url());
+
+            Profile userProfile = event.getIsOrganizedBy().getUserProfile();
+    		dto.setOrganizedBy(userProfile.getFirst_name() + " " + userProfile.getLast_name());
+    		dto.setUserId(event.getIsOrganizedBy().getUser_id());
+
+            dto.setSuccessfull(event.isSuccessfull());
     			
     		listEventDto.add(dto);
     		

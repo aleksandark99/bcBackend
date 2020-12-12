@@ -12,8 +12,9 @@ import lombok.Setter;
 public class EventDto {
 	
 	private int eventId;
-	private String imageURLend, eventName, organizedBy, eventDescription;
+	private String imageURLend, eventName, organizedBy, eventDescription, imageURLstart, imageURLteam;
 	private boolean successfull;
+	private int userId;
 	
 	
 

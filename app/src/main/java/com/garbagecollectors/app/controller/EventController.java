@@ -3,6 +3,7 @@ package com.garbagecollectors.app.controller;
 import java.io.IOException;
 import java.util.Set;
 
+import com.garbagecollectors.app.dto.SingleEventDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,7 +29,7 @@ public class EventController {
     private EventControllerImpl eventControllerImpl;
 
     @GetMapping(value = "/event/{eventId}")
-    public Event getEventById(@PathVariable("eventId") int eventId){
+    public SingleEventDTO getEventById(@PathVariable("eventId") int eventId){
 
         return eventControllerImpl.getEventById(eventId);
     }
@@ -53,6 +54,15 @@ public class EventController {
     	
     	return response;
     	
+    }
+
+    @GetMapping(value = "events/unfinished/unverified")
+    @ResponseBody
+    public EventsResponse getUnfinishedAndUnverifiedEvents(){
+
+        EventsResponse response = eventControllerImpl.getUnfinishedAndUnverifiedEvents();
+
+        return response;
     }
     
    

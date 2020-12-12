@@ -38,8 +38,9 @@ public class EventServiceImpl implements EventService {
 	}
 
     @Override
-    public Set<Event> findUnfinishedEvents() {
-        return (Set<Event>) repository.findUnfinishedEvents();
+    public Set<Event> findByUnfinishedAndUnverified() {
+        return repository.findByFinishedIsFalseAndVerifiedIsFalse();
     }
+
 
 }
