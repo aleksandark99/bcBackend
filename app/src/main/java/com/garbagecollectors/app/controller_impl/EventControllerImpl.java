@@ -86,7 +86,9 @@ public class EventControllerImpl {
        	if (loggedInUser != null) {
 
 			going = loggedInUser.getUser_events().contains(event);
-    		
+			
+			
+    		eventDTO.setOrganizedByThisUser(event.getIsOrganizedBy() == loggedInUser);
     		eventDTO.setGoing(going);
     		
     	}
