@@ -36,15 +36,16 @@ import lombok.Setter;
 @Entity
 
 @SqlResultSetMappings({ //
-	//
+	
 
 	@SqlResultSetMapping(name = "findScoreBoardMapping",
 			classes = {@ConstructorResult(targetClass=com.garbagecollectors.app.dto.UserStatsDto.class,
 			columns = {@ColumnResult(name="user_id", type=Integer.class),
-					   @ColumnResult(name="points_num", type=Integer.class),
-					   @ColumnResult(name="events_count", type=Integer.class),
 					   @ColumnResult(name="first_name", type=String.class),
 					   @ColumnResult(name="last_name", type=String.class),
+					   @ColumnResult(name="username", type=String.class),
+					   @ColumnResult(name="points_num", type=Integer.class),
+					   @ColumnResult(name="organized_events_num", type=Integer.class),
 					
 			})} ),
 	
@@ -57,7 +58,7 @@ import lombok.Setter;
 					   @ColumnResult(name="event_name", type=String.class),
 					   @ColumnResult(name="successfull", type=Boolean.class),
 			
-			})} ),
+			})} )
 
 
 			
@@ -66,14 +67,9 @@ import lombok.Setter;
 @NamedNativeQueries(value = {
 	
 		@NamedNativeQuery(name = "findScoreBoard", query = "" 
-		+ "SELECT u.user_id, p.points_num, count(ue.event_id) AS events_count, p.first_name, p.last_name "
-		+ "FROM users u "
-		+ "JOIN user_events ue ON ue.user_id = u.user_id "
-		+ "JOIN events e ON ue.event_id = e.event_id "
-		+ "JOIN profiles p ON u.user_profile_id = p.profile_id "
-		+ "WHERE e.verified IS TRUE "
-		+ "GROUP BY u.user_id"
-				
+		+ "SELECT u.user_id, p.first_name, p.last_name, u.username, p.points_num, p.organized_events_num "
+		+ "FROM users u " 
+		+ "JOIN profiles p ON p.profile_id = u.user_profile_id"	
 		,resultSetMapping = "findScoreBoardMapping"),
 		
 		@NamedNativeQuery(name = "findEventsForUser", query = "" 
