@@ -12,6 +12,7 @@ import java.util.Set;
 import javax.transaction.Transactional;
 
 @Repository
+@Transactional
 public interface EventRepository extends JpaRepository<Event, Integer> {
 
     @Query(value = "Select * from events where is_organized_by_user_id = :userId", nativeQuery = true)
