@@ -42,5 +42,12 @@ public class EventServiceImpl implements EventService {
         return repository.findByFinishedIsFalseAndVerifiedIsFalse();
     }
 
+	@Override
+	public void verifyAndSetIsSuccessful(boolean successful, int eventId) {
+		repository.verifyAndSetIsSuccessful(successful, eventId);
+		return;
+		
+	}
+
 
 }

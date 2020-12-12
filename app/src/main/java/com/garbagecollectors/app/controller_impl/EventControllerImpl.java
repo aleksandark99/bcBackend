@@ -101,23 +101,26 @@ public class EventControllerImpl {
 
         Set<Event> events = eventService.findByUnfinishedAndUnverified();
 
-        if (!events.isEmpty()) events.stream().forEach(event -> {
+        if (events != null & !events.isEmpty()) {
+        	
+        	 events.stream().forEach(event -> {
 
-            EventDto dto = new EventDto();
+                 EventDto dto = new EventDto();
 
-            dto.setEventId(event.getEvent_id());
-            dto.setEventDescription(event.getEvent_desc());
-            dto.setEventName(event.getEvent_name());
-            dto.setImageURLstart(event.getStart_picture().getPicture_url());
+                 dto.setEventId(event.getEvent_id());
+                 dto.setEventDescription(event.getEvent_desc());
+                 dto.setEventName(event.getEvent_name());
+                 if (event.getStart_picture() != null) dto.setImageURLstart(event.getStart_picture().getPicture_url());
 
-            Profile userProfile = event.getIsOrganizedBy().getUserProfile();
-            dto.setOrganizedBy(userProfile.getFirst_name() + " " + userProfile.getLast_name());
-            dto.setUserId(event.getIsOrganizedBy().getUser_id());
+                 Profile userProfile = event.getIsOrganizedBy().getUserProfile();
+                 dto.setOrganizedBy(userProfile.getFirst_name() + " " + userProfile.getLast_name());
+                 dto.setUserId(event.getIsOrganizedBy().getUser_id());
 
-            dto.setSuccessfull(event.isSuccessfull());
+                 dto.setSuccessfull(event.isSuccessfull());
 
-            listEventDto.add(dto);
-        });
+                 listEventDto.add(dto);
+             });
+        }
 
         response.setEvents(listEventDto);
         response.setStringResponse(new StringResponse(200, false, messageSource.getMessage("finished.verified", null, new Locale("en"))));

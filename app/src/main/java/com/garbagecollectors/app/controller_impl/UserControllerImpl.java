@@ -6,6 +6,8 @@ import java.util.Base64;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -54,7 +56,8 @@ public class UserControllerImpl {
     @Autowired
     private EventService eventService;
     
-
+    @Autowired
+    private HttpServletRequest hsr;
 
     @Value("${secret.key}")
     private String secret;
