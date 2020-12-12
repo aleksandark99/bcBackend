@@ -7,15 +7,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
-import com.garbagecollectors.app.dto.*;
-import com.garbagecollectors.app.model.Profile;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpEntity;
@@ -29,8 +26,15 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.garbagecollectors.app.dto.EventDto;
+import com.garbagecollectors.app.dto.EventRequest;
+import com.garbagecollectors.app.dto.EventsResponse;
+import com.garbagecollectors.app.dto.ImgBB;
+import com.garbagecollectors.app.dto.SingleEventDTO;
+import com.garbagecollectors.app.dto.StringResponse;
 import com.garbagecollectors.app.model.Event;
 import com.garbagecollectors.app.model.Picture;
+import com.garbagecollectors.app.model.Profile;
 import com.garbagecollectors.app.model.User;
 import com.garbagecollectors.app.service.EventService;
 import com.garbagecollectors.app.service.PictureService;

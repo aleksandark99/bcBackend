@@ -104,5 +104,5 @@ public class User {
 	private Set<Event> eventWhichOrganized;
 	
 	@Column(name = "credit")
-	private int credit;
+	private Integer credit;
 }
