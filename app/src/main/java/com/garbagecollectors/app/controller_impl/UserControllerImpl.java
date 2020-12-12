@@ -2,12 +2,12 @@ package com.garbagecollectors.app.controller_impl;
 
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Base64;
+import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.websocket.server.PathParam;
 
-import com.garbagecollectors.app.repository.EventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
@@ -38,6 +38,7 @@ import com.garbagecollectors.app.model.Picture;
 import com.garbagecollectors.app.model.Profile;
 import com.garbagecollectors.app.model.User;
 import com.garbagecollectors.app.model.enums.ERole;
+import com.garbagecollectors.app.repository.EventRepository;
 import com.garbagecollectors.app.security.JwtUtil;
 import com.garbagecollectors.app.service.EventService;
 import com.garbagecollectors.app.service.UserService;
@@ -161,16 +162,19 @@ public class UserControllerImpl {
     
     public ScoreBoardResponse getScoreBoard() {
     	
-    	List<UserStatsDto> users = null;
+    	List<UserStatsDto> scoreBoards = null;
     	
     	ScoreBoardResponse response = new ScoreBoardResponse();
     	
-    	users = userService.findScoreBoard();
+    	//scoreBoards = userService.findScoreBoard();
     	
-    	if (users == null) {
+    	scoreBoards = userService.findScoreBoard();
+    	
+    	if (scoreBoards == null) {
     		response.setResponse(new StringResponse(200, true,  messageSource.getMessage("fetch.error", null, new Locale("en"))));
     	} else {
-    		response.setUsers(users);
+    		System.out.println(scoreBoards.size());
+    		response.setScoreBoards(scoreBoards);
     		response.setResponse(new StringResponse(200, true,  messageSource.getMessage("fetch.scoreboard", null, new Locale("en"))));
 
     	}

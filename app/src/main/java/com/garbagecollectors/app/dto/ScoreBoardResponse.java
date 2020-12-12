@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 public class ScoreBoardResponse {
 	
-	private List<UserStatsDto> users;
+	private List<UserStatsDto> scoreBoards;
 	private StringResponse response;
 	
 
