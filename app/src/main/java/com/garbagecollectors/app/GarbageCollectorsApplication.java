@@ -17,8 +17,6 @@ import com.garbagecollectors.app.security.JwtFilter;
 @EnableJpaRepositories(basePackages = { "com.garbagecollectors.app" })
 public class GarbageCollectorsApplication implements CommandLineRunner{
 	
-	@Autowired
-	EventRepository repo;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(GarbageCollectorsApplication.class, args);
@@ -37,8 +35,11 @@ public class GarbageCollectorsApplication implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-		//System.out.println(repo.findByFinishedAndVerified(true, true).size());
+		
+		/*
+		 * Only for testing
+		 */
+		
 	}
 
 }
