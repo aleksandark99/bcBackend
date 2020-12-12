@@ -41,7 +41,7 @@ import lombok.Setter;
 	@SqlResultSetMapping(name = "findScoreBoardMapping",
 			classes = {@ConstructorResult(targetClass=com.garbagecollectors.app.dto.UserStatsDto.class,
 			columns = {@ColumnResult(name="user_id", type=Integer.class),
-					   @ColumnResult(name="credit", type=Integer.class),
+					   @ColumnResult(name="points_num", type=Integer.class),
 					   @ColumnResult(name="events_count", type=Integer.class),
 					   @ColumnResult(name="first_name", type=String.class),
 					   @ColumnResult(name="last_name", type=String.class),
@@ -57,7 +57,7 @@ import lombok.Setter;
 					   @ColumnResult(name="event_name", type=String.class),
 					   @ColumnResult(name="successfull", type=Boolean.class),
 			
-	})} ),
+			})} ),
 
 
 			
