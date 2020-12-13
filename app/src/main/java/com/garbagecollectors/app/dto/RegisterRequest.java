@@ -12,4 +12,5 @@ import lombok.Setter;
 public class RegisterRequest {
 
     private String username, password, firstName, lastName;
+    private boolean admin;
 }

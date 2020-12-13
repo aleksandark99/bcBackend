@@ -83,7 +83,9 @@ public class UserControllerImpl {
             User newUser = new User();
             newUser.setUsername(request.getUsername());
             newUser.setPassword(UtilityHelper.hashingPassword(request.getPassword()).toString());
-            newUser.setUser_role(ERole.USER);
+            
+            if (request.isAdmin())  newUser.setUser_role(ERole.ADMIN);
+            else newUser.setUser_role(ERole.USER);
 
             //samo se registruju useri, admine hardkodujemo u bazi
 

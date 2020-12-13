@@ -1,4 +1,4 @@
-package com.garbagecollectors.app.config;
+package com.garbagecollectors.app;
  
 
 
