@@ -31,6 +31,7 @@ import com.garbagecollectors.app.model.Event;
 import com.garbagecollectors.app.model.Picture;
 import com.garbagecollectors.app.model.Profile;
 import com.garbagecollectors.app.model.User;
+import com.garbagecollectors.app.repository.EventRepository;
 import com.garbagecollectors.app.service.EventService;
 import com.garbagecollectors.app.service.PictureService;
 import com.garbagecollectors.app.service.UserService;
@@ -257,25 +258,42 @@ public class EventControllerImpl {
 
         return dtf.format(now);
     }
-
+    
+    @Autowired
+    EventRepository repo;
+    
     public  StringResponse deleteEvent(int eventId){
+    	
+    	Event event = eventService.findEventById(eventId);
+    	
+    	
+    	
+    	//repo.delete(event);
+    	
+    	
+//    	event.getUsers().forEach(u ->{
+//    		u.getUser_events().remove(event);
+//    		userService.save(u);
+//    		
+//    	});
+    	
+    	
+//        StringResponse response = new StringResponse();
+//
+//        Event event = eventService.findEventById(eventId);
+//
+//        if(event != null){
+//            eventService.delete(eventId);
+//            response.setCode(200);
+//            response.setError(false);
+//            response.setMessage(messageSource.getMessage("event.has.removed", null, new Locale("en")));
+//        }else {
+//            response.setCode(200);
+//            response.setError(true);
+//            response.setMessage(messageSource.getMessage("event.has.not.removed", null, new Locale("en")));
+//        }
 
-        StringResponse response = new StringResponse();
-
-        Event event = eventService.findEventById(eventId);
-
-        if(event != null){
-            eventService.delete(eventId);
-            response.setCode(200);
-            response.setError(false);
-            response.setMessage(messageSource.getMessage("event.has.removed", null, new Locale("en")));
-        }else {
-            response.setCode(200);
-            response.setError(true);
-            response.setMessage(messageSource.getMessage("event.has.not.removed", null, new Locale("en")));
-        }
-
-        return response;
+        return null;
     }
 
     public UsersNumForEventDTO getUsersNumForEvent (int eventId){

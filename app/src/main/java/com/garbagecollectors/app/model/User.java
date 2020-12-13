@@ -125,4 +125,6 @@ public class User {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "isOrganizedBy")
 	private Set<Event> eventWhichOrganized;
 	
+	
+	
 }
